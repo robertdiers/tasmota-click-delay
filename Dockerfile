@@ -1,9 +1,14 @@
-FROM debian:stable-slim
+#FROM debian:stable-slim
+#FROM ubuntu:impish
+FROM python:slim-buster
 
-RUN apt update
-RUN apt -y upgrade
-RUN apt -y install python3 python3-pip
-RUN pip3 install flask configparser
+USER root
+
+#RUN apt update
+#RUN apt -y upgrade
+#RUN apt -y install python3 python3-pip
+RUN pip3 install configparser
+RUN pip3 install flask
 
 # copy files
 COPY clickdelay.py /app/clickdelay.py

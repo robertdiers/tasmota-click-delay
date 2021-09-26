@@ -5,7 +5,7 @@ USER root
 #install environment requirements
 RUN apt update
 RUN apt install -y python3 python3-pip
-RUN pip3 install flask configparser apscheduler
+RUN pip3 install flask configparser
 
 #install code extensions
 #RUN code-server --install-extension ms-python.python

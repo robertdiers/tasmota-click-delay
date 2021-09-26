@@ -4,9 +4,8 @@ FROM python:slim-buster
 
 USER root
 
-#RUN apt update
-#RUN apt -y upgrade
-#RUN apt -y install python3 python3-pip
+RUN apt update
+RUN apt -y upgrade
 RUN pip3 install configparser
 RUN pip3 install flask
 RUN pip3 install schedule
@@ -23,4 +22,4 @@ COPY timer1.ini /app/timer1.ini
 WORKDIR /app
 
 # run the command on container startup
-CMD ["bash", "containerstart.sh"]
+CMD ["./containerstart.sh"]

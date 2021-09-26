@@ -5,10 +5,14 @@ from threading import Timer
 from urllib.request import urlopen
 from datetime import datetime
 import configparser
+from subprocess import Popen
 
 #read config
 config = configparser.ConfigParser()
 config.read('clickdelay.ini')
+
+#create timer sub process
+Popen(['python3', 'timer1.py'])
 
 #init flask
 app = Flask(__name__)

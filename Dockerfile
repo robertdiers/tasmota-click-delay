@@ -9,6 +9,7 @@ USER root
 #RUN apt -y install python3 python3-pip
 RUN pip3 install configparser
 RUN pip3 install flask
+RUN pip3 install schedule
 
 # copy files
 COPY containerstart.sh /app/containerstart.sh

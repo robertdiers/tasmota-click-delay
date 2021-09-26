@@ -14,6 +14,8 @@ RUN pip3 install flask
 COPY clickdelay.py /app/clickdelay.py
 COPY clickdelay.ini /app/clickdelay.ini
 COPY html /app/html
+COPY timer1.py /app/timer1.py
+COPY timer1.ini /app/timer1.ini
 
 # set workdir
 WORKDIR /app

@@ -4,12 +4,16 @@ from flask import Flask
 from threading import Timer
 from urllib.request import urlopen
 from datetime import datetime
-
 import configparser
+
+#read config
 config = configparser.ConfigParser()
 config.read('clickdelay.ini')
 
+#init flask
 app = Flask(__name__)
+
+#define end points
 
 @app.route('/')
 def index():
@@ -54,4 +58,5 @@ def color(tasmota):
     else:
         return '#FF5733'
 
+#start at port 50000
 app.run(host='0.0.0.0', port=50000)

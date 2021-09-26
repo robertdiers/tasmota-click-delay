@@ -23,4 +23,4 @@ COPY timer1.ini /app/timer1.ini
 WORKDIR /app
 
 # run the command on container startup
-CMD ["sh", "containerstart.sh"]
+CMD ["bash", "containerstart.sh"]

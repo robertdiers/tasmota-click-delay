@@ -32,13 +32,23 @@ def health():
 @app.route('/status/<tasmota>')
 def status(tasmota):
     propkey = 'tasmota.' + tasmota + '.status'
-    statuslink = urlopen(config['TasmotaSection'][propkey])
+    tasurl = config['TasmotaSection'][propkey]
+    envkey = 'TASMOTA_'+tasmota.upper()+'_STATUS'
+    if os.getenv(envkey,'None') != 'None':
+        tasurl = os.getenv(envkey)
+        print ("using env: "+envkey)
+    statuslink = urlopen(tasurl)
     return statuslink.read().decode('utf-8')
 
 def internalswitch(tasmota, offonly):
     if 'ON' in status(tasmota) or offonly == 0:
         propkey = 'tasmota.' + tasmota + '.switch'
-        switchlink = urlopen(config['TasmotaSection'][propkey])    
+        tasurl = config['TasmotaSection'][propkey]
+        envkey = 'TASMOTA_'+tasmota.upper()+'_SWITCH'
+        if os.getenv(envkey,'None') != 'None':
+            tasurl = os.getenv(envkey)
+            print ("using env: "+envkey)
+        switchlink = urlopen(tasurl)
         retval = switchlink.read().decode('utf-8')
         print(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' ' + tasmota + ': ' + retval)
     else:

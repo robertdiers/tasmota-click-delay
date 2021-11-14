@@ -4,4 +4,4 @@
 mkdir -p ~/.config
 
 # start all containers and give user id
-EXAMPLE_UID=${UID} EXAMPLE_GID=${GID} docker-compose -p vsc-server-python up --build --detach
+EXAMPLE_UID=${UID} EXAMPLE_GID=${GID} docker-compose -p vsc-clickdelaypython up --build --detach

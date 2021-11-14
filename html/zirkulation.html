@@ -14,16 +14,6 @@
                     .catch(err => console.log(err))
             }
 
-            function my300() {
-                //activate for 5 minute
-                fetch('/switch/one/300')
-                    .then(response => response.text())
-                    .then((response) => {
-                        mybackground();
-                    })
-                    .catch(err => console.log(err))                
-            }
-            
             function my600() {
                 //activate for 10 minute
                 fetch('/switch/one/600')
@@ -34,9 +24,19 @@
                     .catch(err => console.log(err))                
             }
             
-            function my900() {
-                //activate for 15 minute
-                fetch('/switch/one/900')
+            function my1200() {
+                //activate for 20 minute
+                fetch('/switch/one/1200')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+            
+            function my1800() {
+                //activate for 30 minute
+                fetch('/switch/one/1800')
                     .then(response => response.text())
                     .then((response) => {
                         mybackground();
@@ -48,16 +48,16 @@
     <body onload="mybackground()">
         <div align="center">
             <br>
-            <button type="button" onclick="my300()" style="width: 75%; box-sizing: content-box; height: 30%;">
-                <h1>5 Min. Zirkulation</h1>
+            <button type="button" onclick="my600()" style="width: 70%; box-sizing: content-box; height: 25%;">
+                <h1><font size="+5">10 Min. Zirkulation</font></h1>
             </button>
             <br><br>
-            <button type="button" onclick="my600()" style="width: 75%; box-sizing: content-box; height: 30%;">
-                <h1>10 Min. Zirkulation</h1>
+            <button type="button" onclick="my1200()" style="width: 70%; box-sizing: content-box; height: 25%;">
+                <h1><font size="+5">20 Min. Zirkulation</font></h1>
             </button>
             <br><br>
-            <button type="button" onclick="my900()" style="width: 75%; box-sizing: content-box; height: 30%;">
-                <h1>15 Min. Zirkulation</h1>
+            <button type="button" onclick="my1800()" style="width: 70%; box-sizing: content-box; height: 25%;">
+                <h1><font size="+5">30 Min. Zirkulation</font></h1>
             </button>
         </div>
     </body>

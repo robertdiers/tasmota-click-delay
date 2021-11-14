@@ -5,6 +5,7 @@ from threading import Timer
 from urllib.request import urlopen
 from datetime import datetime
 import configparser
+import os
 
 #read config
 config = configparser.ConfigParser()

@@ -31,24 +31,24 @@ def health():
 
 @app.route('/status/<tasmota>')
 def status(tasmota):
-    propkey = 'tasmota.' + tasmota + '.status'
-    tasurl = config['TasmotaSection'][propkey]
-    envkey = 'TASMOTA_'+tasmota.upper()+'_STATUS'
+    propkey = 'tasmota.' + tasmota + '.ip'
+    tasip = config['TasmotaSection'][propkey]
+    envkey = 'TASMOTA_'+tasmota.upper()+'_IP'
     if os.getenv(envkey,'None') != 'None':
-        tasurl = os.getenv(envkey)
+        tasip = os.getenv(envkey)
         print ("using env: "+envkey)
-    statuslink = urlopen(tasurl)
+    statuslink = urlopen('http://'+tasip+'/?m=1')
     return statuslink.read().decode('utf-8')
 
 def internalswitch(tasmota, offonly):
     if 'ON' in status(tasmota) or offonly == 0:
-        propkey = 'tasmota.' + tasmota + '.switch'
-        tasurl = config['TasmotaSection'][propkey]
-        envkey = 'TASMOTA_'+tasmota.upper()+'_SWITCH'
+        propkey = 'tasmota.' + tasmota + '.IP'
+        tasip = config['TasmotaSection'][propkey]
+        envkey = 'TASMOTA_'+tasmota.upper()+'_IP'
         if os.getenv(envkey,'None') != 'None':
-            tasurl = os.getenv(envkey)
+            tasip = os.getenv(envkey)
             print ("using env: "+envkey)
-        switchlink = urlopen(tasurl)
+        switchlink = urlopen('http://'+tasip+'/?m=1&o=1')
         retval = switchlink.read().decode('utf-8')
         print(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' ' + tasmota + ': ' + retval)
     else:

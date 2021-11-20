@@ -6,3 +6,6 @@ https://hub.docker.com/repository/docker/robertdiers/clickdelaypython
 
 ### Development
 Please start Visual Studio Code Server using script vsc_start.sh, open http://localhost:8080 to code.
+
+### Blog
+https://robertdiers.medium.com/sonoff-basic-with-tasmota-auto-off-after-a-time-delay-ca72160e7862

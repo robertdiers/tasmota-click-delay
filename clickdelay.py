@@ -35,6 +35,7 @@ def status(tasmota):
     propkey = 'tasmota.' + tasmota + '.ip'
     tasip = config['TasmotaSection'][propkey]
     envkey = 'TASMOTA_'+tasmota.upper()+'_IP'
+    print (os.getenv(envkey,'None'))
     if os.getenv(envkey,'None') != 'None':
         tasip = os.getenv(envkey)
         print ("using env: "+envkey)

@@ -4,7 +4,7 @@ USER root
 
 RUN apt update
 RUN apt -y upgrade
-RUN pip3 install configparser flask
+RUN pip3 install configparser flask paho-mqtt
 
 # copy files
 COPY clickdelay.py /app/clickdelay.py

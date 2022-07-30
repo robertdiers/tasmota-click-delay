@@ -8,20 +8,17 @@ from paho.mqtt import client as mqtt_client
 #read config
 config = configparser.ConfigParser()
 tasmota_name = 'unknown'
-client = 'unknown'
 
-def on():
+def on(client):
     global tasmota_name   
     topic = "cmnd/" + tasmota_name + "/Power"
     print(topic + " on")
-    global client
     client.publish(topic, "ON")
 
-def off():
+def off(client):
     global tasmota_name   
     topic = "cmnd/" + tasmota_name + "/Power"
     print(topic + " off")
-    global client
     client.publish(topic, "OFF")
 
 def connect():
@@ -65,9 +62,10 @@ def connect():
         client_id = 'python-mqtt-clickdelay-circulation'
 
         # Set Connecting Client ID
-        global client
         client = mqtt_client.Client(client_id)
         client.username_pw_set(circulation_mqtt_user, circulation_mqtt_password)
         client.connect(circulation_mqtt_broker, int(circulation_mqtt_port))
+
+        return client
     except Exception as ex:
         print ("ERROR: ", ex)    

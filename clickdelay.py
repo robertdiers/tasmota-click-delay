@@ -20,7 +20,7 @@ circulation = 0
 app = Flask(__name__)
 
 #init Tasmota
-TasmotaCirculation.connect()
+circulation_client = TasmotaCirculation.connect()
 
 #define end points
 
@@ -47,13 +47,15 @@ def status(tasmota):
 
 def internalon(tasmota):
     if 'circulation' in tasmota:
-        TasmotaCirculation.on()
+        global circulation_client
+        TasmotaCirculation.on(circulation_client)
         global circulation
         circulation = 1
 
 def internaloff(tasmota):
     if 'circulation' in tasmota:
-        TasmotaCirculation.off()
+        global circulation_client
+        TasmotaCirculation.off(circulation_client)
         global circulation
         circulation = 0
 

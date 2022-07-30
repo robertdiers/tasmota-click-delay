@@ -12,13 +12,13 @@ tasmota_name = 'unknown'
 def on(client):
     global tasmota_name   
     topic = "cmnd/" + tasmota_name + "/Power"
-    print(topic + " on")
+    #print(topic + " on")
     client.publish(topic, "ON")
 
 def off(client):
     global tasmota_name   
     topic = "cmnd/" + tasmota_name + "/Power"
-    print(topic + " off")
+    #print(topic + " off")
     client.publish(topic, "OFF")
 
 def connect():

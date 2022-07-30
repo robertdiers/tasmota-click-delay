@@ -49,19 +49,18 @@ def internalon(tasmota):
         global circulation
         circulation = 1
 
-def internaloff(tasmota, client):
+def internaloff(tasmota):
     if 'circulation' in tasmota:
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
-        TasmotaCirculation.off(client)
+        TasmotaCirculation.off(circulation_client)
         global circulation
         circulation = 0
 
 @app.route('/on/<tasmota>/<waittime>')
 def on(tasmota, waittime):
     internalon(tasmota)
-    global circulation_client
-    t = Timer(float(waittime), internaloff, [tasmota, circulation_client])
+    t = Timer(float(waittime), internaloff, [tasmota])
     t.start() 
     return 'ON'
 

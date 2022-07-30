@@ -12,15 +12,11 @@ import TasmotaCirculation
 config = configparser.ConfigParser()
 config.read('clickdelay.ini')
 
-
 #variables
 circulation = 0
 
 #init flask
 app = Flask(__name__)
-
-#init Tasmota
-circulation_client = TasmotaCirculation.connect()
 
 #define end points
 
@@ -47,13 +43,16 @@ def status(tasmota):
 
 def internalon(tasmota):
     if 'circulation' in tasmota:
-        global circulation_client
+        #init Tasmota
+        circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.on(circulation_client)
         global circulation
         circulation = 1
 
 def internaloff(tasmota, client):
     if 'circulation' in tasmota:
+        #init Tasmota
+        circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.off(client)
         global circulation
         circulation = 0

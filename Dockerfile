@@ -10,6 +10,7 @@ RUN pip3 install configparser flask
 COPY clickdelay.py /app/clickdelay.py
 RUN chmod u+x /app/clickdelay.py
 COPY clickdelay.ini /app/clickdelay.ini
+COPY TasmotaCirculation.py /app/TasmotaCirculation.py
 COPY html /app/html
 
 # set workdir

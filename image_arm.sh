@@ -1,2 +1,2 @@
-docker build --tag robertdiers/clickdelaypython:arm .
-docker push robertdiers/clickdelaypython:arm
+sudo docker build --tag robertdiers/clickdelaypython:arm .
+sudo docker push robertdiers/clickdelaypython:arm

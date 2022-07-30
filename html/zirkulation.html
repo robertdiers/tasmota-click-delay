@@ -6,7 +6,7 @@
         <script>
 
             function mybackground() {
-                fetch('/color/one')
+                fetch('/color/circulation')
                     .then(response => response.text())
                     .then((response) => {
                         document.body.style.backgroundColor = response;
@@ -16,7 +16,7 @@
 
             function my600() {
                 //activate for 10 minute
-                fetch('/switch/one/600')
+                fetch('/on/circulation/600')
                     .then(response => response.text())
                     .then((response) => {
                         mybackground();
@@ -26,7 +26,7 @@
             
             function my1200() {
                 //activate for 20 minute
-                fetch('/switch/one/1200')
+                fetch('/on/circulation/1200')
                     .then(response => response.text())
                     .then((response) => {
                         mybackground();
@@ -36,7 +36,7 @@
             
             function my1800() {
                 //activate for 30 minute
-                fetch('/switch/one/1800')
+                fetch('/on/circulation/1800')
                     .then(response => response.text())
                     .then((response) => {
                         mybackground();

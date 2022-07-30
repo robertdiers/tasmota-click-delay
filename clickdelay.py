@@ -2,17 +2,25 @@
 
 from flask import Flask
 from threading import Timer
-from urllib.request import urlopen
 from datetime import datetime
 import configparser
 import os
+
+import TasmotaCirculation
 
 #read config
 config = configparser.ConfigParser()
 config.read('clickdelay.ini')
 
+
+#variables
+circulation = 0
+
 #init flask
 app = Flask(__name__)
+
+#init Tasmota
+TasmotaCirculation.connect()
 
 #define end points
 
@@ -32,40 +40,33 @@ def health():
 
 @app.route('/status/<tasmota>')
 def status(tasmota):
-    propkey = 'tasmota.' + tasmota + '.ip'
-    tasip = config['TasmotaSection'][propkey]
-    envkey = 'TASMOTA_'+tasmota.upper()+'_IP'
-    print (os.getenv(envkey,'None'))
-    if os.getenv(envkey,'None') != 'None':
-        tasip = os.getenv(envkey)
-        print ("using env: "+envkey)
-    statuslink = urlopen('http://'+tasip+'/?m=1')
-    return statuslink.read().decode('utf-8')
+    if 'circulation' in tasmota:
+        global circulation
+        return circulation
+    return 0
 
-def internalswitch(tasmota, offonly):
-    if 'ON' in status(tasmota) or offonly == 0:
-        propkey = 'tasmota.' + tasmota + '.IP'
-        tasip = config['TasmotaSection'][propkey]
-        envkey = 'TASMOTA_'+tasmota.upper()+'_IP'
-        if os.getenv(envkey,'None') != 'None':
-            tasip = os.getenv(envkey)
-            print ("using env: "+envkey)
-        switchlink = urlopen('http://'+tasip+'/?m=1&o=1')
-        retval = switchlink.read().decode('utf-8')
-        print(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' ' + tasmota + ': ' + retval)
-    else:
-        print(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ' ' + tasmota + ': already off')
+def internalon(tasmota):
+    if 'circulation' in tasmota:
+        TasmotaCirculation.on()
+        global circulation
+        circulation = 1
 
-@app.route('/switch/<tasmota>/<waittime>')
-def switch(tasmota, waittime):
-    internalswitch(tasmota, 0)
-    t = Timer(float(waittime), internalswitch, [tasmota, 1])
+def internaloff(tasmota):
+    if 'circulation' in tasmota:
+        TasmotaCirculation.off()
+        global circulation
+        circulation = 0
+
+@app.route('/on/<tasmota>/<waittime>')
+def on(tasmota, waittime):
+    internalon(tasmota)
+    t = Timer(float(waittime), internaloff, [tasmota])
     t.start() 
-    return status(tasmota)
+    return 'ON'
 
 @app.route('/color/<tasmota>')
 def color(tasmota):
-    if 'ON' in status(tasmota):
+    if status(tasmota) > 0:
         return '#DAF7A6'
     else:
         return '#FF5733'

@@ -19,7 +19,6 @@ circulation = 0
 app = Flask(__name__)
 
 #define end points
-
 @app.route('/')
 def index():
     f = open("html/index.html", "r")
@@ -71,5 +70,6 @@ def color(tasmota):
     else:
         return '#FF5733'
 
-#start at port 50000
-app.run(host='0.0.0.0', port=50000)
+if __name__ == "__main__":
+    #start at port 50000
+    app.run(host='0.0.0.0', port=50000)

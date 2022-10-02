@@ -69,3 +69,4 @@ def connect():
         return client
     except Exception as ex:
         print ("ERROR: ", ex)    
+        print(ex)

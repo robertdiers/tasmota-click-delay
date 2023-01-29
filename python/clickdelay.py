@@ -12,9 +12,6 @@ import TasmotaCirculation
 config = configparser.ConfigParser()
 config.read('clickdelay.ini')
 
-#variables
-circulation = 0
-
 #init flask
 app = Flask(__name__)
 
@@ -36,8 +33,11 @@ def health():
 @app.route('/status/<tasmota>')
 def status(tasmota):
     if 'circulation' in tasmota:
-        global circulation
-        return circulation
+        #as we call only /color/x - cache is not required
+        #{"Status":{"Module":1,"DeviceName":"Zirkulation","FriendlyName":["Zirkulation"],"Topic":"tasmota_zirkulation","ButtonTopic":"0","Power":0,"PowerOnState":3,"LedState":1,"LedMask":"FFFF","SaveData":1,"SaveState":1,"SwitchTopic":"0","SwitchMode":[0,0,0,0,0,0,0,0],"ButtonRetain":0,"SwitchRetain":0,"SensorRetain":0,"PowerRetain":0,"InfoRetain":0,"StateRetain":0}}
+        circulation_client = TasmotaCirculation.connect()
+        result = TasmotaCirculation.get(circulation_client, ["Status_Power"])
+        return int(result["Status_Power"])
     return 0
 
 def internalon(tasmota):
@@ -45,16 +45,12 @@ def internalon(tasmota):
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.on(circulation_client)
-        global circulation
-        circulation = 1
 
 def internaloff(tasmota):
     if 'circulation' in tasmota:
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.off(circulation_client)
-        global circulation
-        circulation = 0
 
 @app.route('/on/<tasmota>/<waittime>')
 def on(tasmota, waittime):

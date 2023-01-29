@@ -7,15 +7,9 @@ RUN apt -y install cron python3 python3-pip
 RUN pip3 install configparser flask paho-mqtt
 
 # copy files
-COPY clickdelay.py /app/clickdelay.py
-COPY stopcirculation.py /app/stopcirculation.py
-COPY clickdelay.ini /app/clickdelay.ini
-RUN chmod 777 /app/clickdelay.ini
-COPY TasmotaCirculation.py /app/TasmotaCirculation.py
-COPY html /app/html
-
-COPY entrypoint.sh /app/entrypoint.sh
-COPY container_cron /etc/cron.d/container_cron
+COPY python /app/python
+COPY shell/entrypoint.sh /app/entrypoint.sh
+COPY shell/container_cron /etc/cron.d/container_cron
 
 # set workdir
 WORKDIR /app

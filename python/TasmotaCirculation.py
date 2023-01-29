@@ -6,7 +6,6 @@ from datetime import datetime
 from paho.mqtt import client as mqtt_client
 import time
 import json
-import socket
 
 #read config
 config = configparser.ConfigParser()

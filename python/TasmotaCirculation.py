@@ -98,19 +98,19 @@ def connect():
         # override with environment variables
         if os.getenv('CIRCULATION_MQTT_BROKER','None') != 'None':
             circulation_mqtt_broker = os.getenv('CIRCULATION_MQTT_BROKER')
-            print ("using env: CIRCULATION_MQTT_BROKER")
+            #print ("using env: CIRCULATION_MQTT_BROKER")
         if os.getenv('CIRCULATION_MQTT_PORT','None') != 'None':
             circulation_mqtt_port = os.getenv('CIRCULATION_MQTT_PORT')
-            print ("using env: CIRCULATION_MQTT_PORT")
+            #print ("using env: CIRCULATION_MQTT_PORT")
         if os.getenv('CIRCULATION_MQTT_USER','None') != 'None':
             circulation_mqtt_user = os.getenv('CIRCULATION_MQTT_USER')
-            print ("using env: CIRCULATION_MQTT_USER")
+            #print ("using env: CIRCULATION_MQTT_USER")
         if os.getenv('CIRCULATION_MQTT_PASSWORD','None') != 'None':
             circulation_mqtt_password = os.getenv('CIRCULATION_MQTT_PASSWORD')
-            print ("using env: CIRCULATION_MQTT_PASSWORD")
+            #print ("using env: CIRCULATION_MQTT_PASSWORD")
         if os.getenv('CIRCULATION_MQTT_NAME','None') != 'None':
             circulation_mqtt_name = os.getenv('CIRCULATION_MQTT_NAME')
-            print ("using env: CIRCULATION_MQTT_NAME")
+            #print ("using env: CIRCULATION_MQTT_NAME")
 
         #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation_mqtt_broker: ", circulation_mqtt_broker)
         #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation_mqtt_port: ", circulation_mqtt_port)

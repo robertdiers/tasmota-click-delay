@@ -18,7 +18,7 @@ CIRCULATION_MQTT_PASSWORD (default: password)
 
 CIRCULATION_MQTT_NAME (default: tasmota_zirkulation)
 
-docker run -d --restart always -p 50000:50000 -e CIRCULATION_MQTT_PASSWORD=password --name tasmotaclickdelay ghcr.io/robertdiers/tasmota-click-delay:1.0
+docker run -d --restart always -p 50000:50000 -e CIRCULATION_MQTT_BROKER=192.168.1.7 -e CIRCULATION_MQTT_PASSWORD=password --name tasmotaclickdelay ghcr.io/robertdiers/tasmota-click-delay:1.1
 
 ### Website: ###
 http://localhost:50000/zirkulation

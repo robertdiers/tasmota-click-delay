@@ -4,9 +4,10 @@ from flask import Flask
 from threading import Timer
 from datetime import datetime
 import configparser
-import os
 
 import TasmotaCirculation
+import TasmotaHeatingSystem
+import TasmotaHeatingSystemTemp
 
 #read config
 config = configparser.ConfigParser()
@@ -26,6 +27,11 @@ def zirkulation():
     f = open("html/zirkulation.html", "r")
     return f.read()
 
+@app.route('/badheizung')
+def badheizung():
+    f = open("html/badheizung.html", "r")
+    return f.read()
+
 @app.route('/health')
 def health():
     return 'up'
@@ -34,23 +40,45 @@ def health():
 def status(tasmota):
     if 'circulation' in tasmota:
         #as we call only /color/x - cache is not required
-        #{"Status":{"Module":1,"DeviceName":"Zirkulation","FriendlyName":["Zirkulation"],"Topic":"tasmota_zirkulation","ButtonTopic":"0","Power":0,"PowerOnState":3,"LedState":1,"LedMask":"FFFF","SaveData":1,"SaveState":1,"SwitchTopic":"0","SwitchMode":[0,0,0,0,0,0,0,0],"ButtonRetain":0,"SwitchRetain":0,"SensorRetain":0,"PowerRetain":0,"InfoRetain":0,"StateRetain":0}}
+        #{"Status":{"Module":1,"DeviceName":"Tasmota_Zirkulation","FriendlyName":["Tasmota_Zirkulation"],"Topic":"tasmota_zirkulation","ButtonTopic":"0","Power":0,"PowerOnState":3,"LedState":1,"LedMask":"FFFF","SaveData":1,"SaveState":1,"SwitchTopic":"0","SwitchMode":[0,0,0,0,0,0,0,0],"ButtonRetain":0,"SwitchRetain":0,"SensorRetain":0,"PowerRetain":0,"InfoRetain":0,"StateRetain":0}}
         circulation_client = TasmotaCirculation.connect()
         result = TasmotaCirculation.get(circulation_client, ["Status_Power"])
         return int(result["Status_Power"])
+    if 'badheizung' in tasmota:
+        #as we call only /color/x - cache is not required
+        #{"Status":{"Module":1,"DeviceName":"Tasmota_Heizungspumpe","FriendlyName":["Tasmota_Heizungspumpe"],"Topic":"tasmota_heizungspumpe","ButtonTopic":"0","Power":0,"PowerOnState":3,"LedState":1,"LedMask":"FFFF","SaveData":1,"SaveState":1,"SwitchTopic":"0","SwitchMode":[0,0,0,0,0,0,0,0],"ButtonRetain":0,"SwitchRetain":0,"SensorRetain":0,"PowerRetain":0,"InfoRetain":0,"StateRetain":0}}
+        heatingsystem_client = TasmotaHeatingSystem.connect()
+        result = TasmotaHeatingSystem.get(heatingsystem_client, ["Status_Power"])
+        return int(result["Status_Power"])
     return 0
+
+@app.route('/value/<tasmota>/<value>')
+def value(tasmota, value):
+    if 'badheizung' in tasmota:
+        heatingsystemtemp_client = TasmotaHeatingSystemTemp.connect()
+        result = TasmotaHeatingSystemTemp.get(heatingsystemtemp_client, "8", [value])
+        return str(result[value])
+    return 'n/a'
 
 def internalon(tasmota):
     if 'circulation' in tasmota:
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.on(circulation_client)
+    if 'badheizung' in tasmota:
+        #init Tasmota
+        heatingsystem_client = TasmotaHeatingSystem.connect()
+        TasmotaHeatingSystem.on(heatingsystem_client)
 
 def internaloff(tasmota):
     if 'circulation' in tasmota:
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.off(circulation_client)
+    if 'badheizung' in tasmota:
+        #init Tasmota
+        heatingsystem_client = TasmotaHeatingSystem.connect()
+        TasmotaHeatingSystem.off(heatingsystem_client)
 
 @app.route('/on/<tasmota>/<waittime>')
 def on(tasmota, waittime):
@@ -58,6 +86,11 @@ def on(tasmota, waittime):
     t = Timer(float(waittime), internaloff, [tasmota])
     t.start() 
     return 'ON'
+
+@app.route('/off/<tasmota>')
+def off(tasmota):
+    internaloff(tasmota)
+    return 'OFF'
 
 @app.route('/color/<tasmota>')
 def color(tasmota):

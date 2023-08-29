@@ -55,11 +55,11 @@ def on_message(client, userdata, message):
         else:
             valueattributes[attribute] = "n/a"
 
-def get(client, attributes):
+def get(client, statusnumber, attributes):
     try:
         global tasmota_name   
         topic = "cmnd/" + tasmota_name + "/Status"
-        topicstat = "stat/" + tasmota_name + "/STATUS"
+        topicstat = "stat/" + tasmota_name + "/#"
         #print(topic)
         global searchattributes
         global valueattributes
@@ -69,7 +69,7 @@ def get(client, attributes):
         client.subscribe(topicstat)
         client.loop_start()
         #send status request to tasmota
-        client.publish(topic, 'status')
+        client.publish(topic, statusnumber)
         counter = 0
         #wait max 10 sec
         while len(valueattributes) == 0 and counter < 100:
@@ -93,7 +93,7 @@ def connect():
         mqtt_port = config['MqttSection']['mqtt_port']
         mqtt_user = config['MqttSection']['mqtt_user']
         mqtt_password = config['MqttSection']['mqtt_password']
-        mqtt_name = config['CirculationSection']['circulation_mqtt_name']
+        mqtt_name = config['HeatingSystemSection']['heatingsystemtemp_mqtt_name']
 
         # override with environment variables
         if os.getenv('MQTT_BROKER','None') != 'None':
@@ -108,19 +108,19 @@ def connect():
         if os.getenv('MQTT_PASSWORD','None') != 'None':
             mqtt_password = os.getenv('MQTT_PASSWORD')
             #print ("using env: MQTT_PASSWORD")
-        if os.getenv('CIRCULATION_MQTT_NAME','None') != 'None':
-            mqtt_name = os.getenv('CIRCULATION_MQTT_NAME')
-            #print ("using env: CIRCULATION_MQTT_NAME")
+        if os.getenv('HEATINGSYSTEMTEMP_MQTT_NAME','None') != 'None':
+            mqtt_name = os.getenv('HEATINGSYSTEMTEMP_MQTT_NAME')
+            #print ("using env: HEATINGSYSTEMTEMP_MQTT_NAME")
 
-        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation mqtt_broker: ", mqtt_broker)
-        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation mqtt_port: ", mqtt_port)
-        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation mqtt_user: ", mqtt_user)
-        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation mqtt_password: ", mqtt_password)
-        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " circulation mqtt_name: ", mqtt_name)
+        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " heatingsystem mqtt_broker: ", mqtt_broker)
+        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " heatingsystem mqtt_port: ", mqtt_port)
+        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " heatingsystem mqtt_user: ", mqtt_user)
+        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " heatingsystem mqtt_password: ", mqtt_password)
+        #print (datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " heatingsystem mqtt_name: ", mqtt_name)
         
         global tasmota_name        
         tasmota_name = mqtt_name
-        client_id = 'python-mqtt-clickdelay-circulation'
+        client_id = 'python-mqtt-clickdelay-heatingsystemtemp'
 
         # Set Connecting Client ID
         client = mqtt_client.Client(client_id)

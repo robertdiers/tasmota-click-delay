@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <script>
+
+            function mybackground() {
+                //background
+                fetch('/color/badheizung')
+                    .then(response => response.text())
+                    .then((response) => {
+                        document.body.style.backgroundColor = response;
+                    })
+                    .catch(err => console.log(err))
+                //temperature
+                fetch('/value/badheizung/StatusSNS_DS18B20_Temperature')
+                    .then(response => response.text())
+                    .then((response) => {
+                        document.getElementById("tempspan").innerHTML = response;
+                    })
+                    .catch(err => console.log(err))
+            }
+
+            function my3600() {
+                //activate for 1 hours
+                fetch('/on/badheizung/3600')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+
+            function my7200() {
+                //activate for 2 hours
+                fetch('/on/badheizung/7200')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+
+            function my10800() {
+                //activate for 3 hours
+                fetch('/on/badheizung/10800')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+            
+            function my21600() {
+                //activate for 6 hours
+                fetch('/on/badheizung/21600')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+            
+            function my43200() {
+                //activate for 12 hours
+                fetch('/on/badheizung/43200')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+
+            function myOff() {
+                //deactivate
+                fetch('/off/badheizung')
+                    .then(response => response.text())
+                    .then((response) => {
+                        mybackground();
+                    })
+                    .catch(err => console.log(err))                
+            }
+
+        </script>
+    </head>
+    <body onload="mybackground()">
+        <div align="center">
+            <br></font>Heizungsende 3 Uhr Nachts, aktuelle Bad Temperatur: <h1><span id="tempspan">n/a</span> &deg;C</h1>
+            <button type="button" onclick="my3600()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">1 Stunde Heizung</font></h1>
+            </button>
+            <br><br>
+            <button type="button" onclick="my7200()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">2 Stunden Heizung</font></h1>
+            </button>
+            <br><br>
+            <button type="button" onclick="my10800()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">3 Stunden Heizung</font></h1>
+            </button>
+            <br><br>
+            <button type="button" onclick="my21600()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">6 Stunden Heizung</font></h1>
+            </button>
+            <br><br>
+            <button type="button" onclick="my43200()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">12 Stunden Heizung</font></h1>
+            </button>
+            <br><br>
+            <button type="button" onclick="myOff()" style="width: 70%; box-sizing: content-box; height: 10%;">
+                <h1><font size="+4">Heizung ausschalten</font></h1>
+            </button>
+        </div>
+    </body>
+</html>

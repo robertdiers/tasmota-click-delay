@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import TasmotaCirculation
 import TasmotaHeatingSystem
+import TasmotaHeatingSystemTemp
 
 if __name__ == "__main__":
     try:
@@ -13,5 +14,8 @@ if __name__ == "__main__":
         print ("force stopping heatingsystem")
         heatingsystem_client = TasmotaHeatingSystem.connect()
         TasmotaHeatingSystem.off(heatingsystem_client)
+        #turn off light
+        heatingsystemtemp_client = TasmotaHeatingSystemTemp.connect()
+        TasmotaHeatingSystemTemp.off(heatingsystemtemp_client)
     except Exception as ex2:
         print ("ERROR force stopping heatingsystem: ", ex2)

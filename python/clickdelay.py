@@ -69,6 +69,9 @@ def internalon(tasmota):
         #init Tasmota
         heatingsystem_client = TasmotaHeatingSystem.connect()
         TasmotaHeatingSystem.on(heatingsystem_client)
+        #turn on light
+        heatingsystemtemp_client = TasmotaHeatingSystemTemp.connect()
+        TasmotaHeatingSystemTemp.on(heatingsystemtemp_client)
 
 def internaloff(tasmota):
     if 'circulation' in tasmota:
@@ -79,6 +82,9 @@ def internaloff(tasmota):
         #init Tasmota
         heatingsystem_client = TasmotaHeatingSystem.connect()
         TasmotaHeatingSystem.off(heatingsystem_client)
+        #turn off light
+        heatingsystemtemp_client = TasmotaHeatingSystemTemp.connect()
+        TasmotaHeatingSystemTemp.off(heatingsystemtemp_client)
 
 @app.route('/on/<tasmota>/<waittime>')
 def on(tasmota, waittime):

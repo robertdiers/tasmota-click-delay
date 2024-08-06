@@ -22,7 +22,7 @@ HEATINGSYSTEM_MQTT_NAME (default: tasmota_heizungspumpe)
 
 HEATINGSYSTEMTEMP_MQTT_NAME (default: tasmota_bad)
 
-docker run -d --restart always -p 50000:50000 -e MQTT_BROKER=192.168.1.7 -e MQTT_PASSWORD=password --name tasmotaclickdelay ghcr.io/robertdiers/tasmota-click-delay:1.1
+docker run -d --restart always -p 50000:50000 -e MQTT_BROKER=192.168.1.7 -e MQTT_PASSWORD=password --name tasmotaclickdelay ghcr.io/robertdiers/tasmota-click-delay:1.3
 
 ### Website: ###
 

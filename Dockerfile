@@ -2,7 +2,9 @@ FROM docker.io/debian:stable-slim
 
 RUN apt update
 RUN apt -y upgrade
-RUN apt -y install cron python3 python3-pip python3-flask python3-paho-mqtt
+RUN apt -y install cron python3 python3-pip python3-flask python3-venv
+RUN python3 -m venv ~/.local --system-site-packages
+RUN ~/.local/bin/pip install configparser paho-mqtt
 
 # copy files
 COPY python /app/python

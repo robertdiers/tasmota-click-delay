@@ -123,7 +123,7 @@ def connect():
         client_id = 'python-mqtt-clickdelay-circulation'
 
         # Set Connecting Client ID
-        client = mqtt_client.Client(client_id)
+        client = mqtt_client.Client(mqtt_client.CallbackAPIVersion.VERSION1, client_id)
         client.username_pw_set(mqtt_user, mqtt_password)
         client.connect(mqtt_broker, int(mqtt_port))
 

@@ -51,7 +51,7 @@ def on_message(client, userdata, message):
     #print(json_object)
     for attribute in searchattributes:
         if attribute in json_object:
-            valueattributes[attribute] = json_object[attribute]
+            valueattributes[attrimqtt_client.CallbackAPIVersion.VERSION1, bute] = json_object[attribute]
         else:
             valueattributes[attribute] = "n/a"
 
@@ -123,7 +123,7 @@ def connect():
         client_id = 'python-mqtt-clickdelay-heatingsystem'
 
         # Set Connecting Client ID
-        client = mqtt_client.Client(client_id)
+        client = mqtt_client.Client(mqtt_client.CallbackAPIVersion.VERSION1, client_id)
         client.username_pw_set(mqtt_user, mqtt_password)
         client.connect(mqtt_broker, int(mqtt_port))
 

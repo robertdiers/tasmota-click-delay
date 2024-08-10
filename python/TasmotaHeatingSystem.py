@@ -51,7 +51,7 @@ def on_message(client, userdata, message):
     #print(json_object)
     for attribute in searchattributes:
         if attribute in json_object:
-            valueattributes[attrimqtt_client.CallbackAPIVersion.VERSION1, bute] = json_object[attribute]
+            valueattributes[attribute] = json_object[attribute]
         else:
             valueattributes[attribute] = "n/a"
 

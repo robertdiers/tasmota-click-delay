@@ -1,1 +1,4 @@
+# force stop at night, in case the delay failed
 0 3 * * * . $HOME/.profile; cd /app/python; python3 forcestop.py > /proc/1/fd/1 2>/proc/1/fd/2
+# 5 minute cron to activate the timer on/off
+*/5 * * * * . $HOME/.profile; cd /app/python; python3 timer.py > /proc/1/fd/1 2>/proc/1/fd/2

@@ -1,9 +1,9 @@
-FROM docker.io/ubuntu:24.04
+FROM docker.io/ubuntu:24.10
 
 RUN apt update
 RUN apt -y upgrade
 RUN apt -y install cron python3 python3-pip python3-flask
-RUN pip install paho-mqtt --break-system-packages
+RUN pip install paho-mqtt pytz --break-system-packages
 
 # copy files
 COPY python /app/python

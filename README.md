@@ -1,7 +1,11 @@
 # tasmota-click-delay
+
 website to turn on Tasmota and give delay for automatic turn off - used to trigger circulation and heating pump
 
+Addon: timer functionality for circulation pump
+
 ### Defaults
+
 please check properties in clickdelay.ini file, could be overridden by Docker env variables
 
 ### Docker usage
@@ -17,6 +21,12 @@ MQTT_USER (default: admin)
 MQTT_PASSWORD (default: password)
 
 CIRCULATION_MQTT_NAME (default: tasmota_zirkulation)
+
+CIRCULATION_HOUR_ON (default: 17)
+
+CIRCULATION_HOUR_OFF (default: 22)
+
+CIRCULATION_TIME_ZONE (default: Europe/Berlin)
 
 HEATINGSYSTEM_MQTT_NAME (default: tasmota_heizungspumpe)
 

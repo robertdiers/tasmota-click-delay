@@ -4,6 +4,7 @@ from flask import Flask
 from threading import Timer
 from datetime import datetime
 import configparser
+import os
 
 import TasmotaCirculation
 import TasmotaHeatingSystem
@@ -65,6 +66,9 @@ def internalon(tasmota):
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.on(circulation_client)
+        #create lock
+        with open(config['CirculationSection']['circulation_lock_filename'], "w") as f:
+            f.write("X")
     if 'badheizung' in tasmota:
         #init Tasmota
         heatingsystem_client = TasmotaHeatingSystem.connect()
@@ -78,6 +82,9 @@ def internaloff(tasmota):
         #init Tasmota
         circulation_client = TasmotaCirculation.connect()
         TasmotaCirculation.off(circulation_client)
+        #remove lock
+        if os.path.exists(config['CirculationSection']['circulation_lock_filename']):
+            os.remove(config['CirculationSection']['circulation_lock_filename'])
     if 'badheizung' in tasmota:
         #init Tasmota
         heatingsystem_client = TasmotaHeatingSystem.connect()
